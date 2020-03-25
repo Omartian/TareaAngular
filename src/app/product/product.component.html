@@ -1,0 +1,66 @@
+<div class="container" id="Titulo">
+    <div class="row">
+        <div class="col-sm-8">
+            <h3 class="display-2"> Buscar productos </h3>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+
+<div class="container" id="searchBar">
+    <div class="row">
+        <div class="col-sm-8">
+            <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" [(ngModel)]='busqueda' (keydown.enter)="buscar()">
+        </div>
+        <div class="col-sm-4">
+            <button type="button" class="btn btn-outline-primary" (click)="buscar()">Buscar producto</button>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container" id="Titulo">
+    <div class="row">
+        <div class="col-sm-8">
+            <p *ngIf="busqueda.length >= 1" class="text-muted"><strong>Buscando: </strong>{{busqueda}}</p>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+
+<div class="container" id="checkboxes">
+    <div class="row">
+        <div class="col-sm-4">
+            <input type="checkbox" id="cbox1" value="first_checkbox" (click)="existencia()"> Solo en existencia <br>
+            <input type="checkbox" id="cbox2" value="second_checkbox" (click)="ordenar()"> Ordenar por precio (menor a mayor) <br>
+            <input type="checkbox" id="cbox3" value="third_checkbox" (click)="resaltar()"> Resaltar existencia mayor a 3 <br>
+            <br>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+
+
+<div *ngFor="let producto of productosFiltrados; let i = index" id="productList">
+        <div class="container">
+            <div class="row">
+                <div>
+                    <img src="https://i.picsum.photos/id/{{producto.uid}}/100/100.jpg" alt="" srcset="">
+                </div>
+                <div class="col-7" [ngStyle]="{'background-color':resaltados && producto.existencia > 3?'coral':'white'}">
+                    <h3>   {{producto.nombre}} </h3>
+                    <h6>Precio (MXN): ${{producto.precio}}</h6>
+                    <h6>Marca: {{producto.marca}}</h6>
+                    <h6>Descripción: {{producto.descripcion}}</h6>
+                    <h6>Existencia: {{producto.existencia}}</h6>
+                    <hr>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div *ngIf="productosFiltrados.length < 1" class="alert alert-danger" role="alert">
+    <strong>Ningún producto coincide con la búsqueda.</strong>
+</div>
+
